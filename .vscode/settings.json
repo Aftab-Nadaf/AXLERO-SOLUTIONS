@@ -1,0 +1,8 @@
+{
+    "java.compile.nullAnalysis.mode": "automatic",
+    "terminal.integrated.env.windows": {
+        
+    },
+    "maven.view": "hierarchical",
+    "java.configuration.updateBuildConfiguration": "interactive"
+}
