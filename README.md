@@ -23,7 +23,7 @@ ARCHITECTURE ------->
 ├── spring-backend(BACKEND)/                  # Spring Boot Service / BFF Gateway
 │   ├── src/
 │   │   ├── main/
-│   │   │   ├── java/Server/backend/BackendApplication
+│   │   │   ├── java/Server/backend/
 │   │   │   │   ├── config/          # gRPC Server & Security configs
 │   │   │   │   ├── controller/      # Optional REST controllers (if mapping REST to gRPC)
 │   │   │   │   ├── exception/       # Global exception mappings
