@@ -3,7 +3,8 @@ ADVANCED FULL-STACK JAVA ENGINEERING
 
 
 ARCHITECTURE ------->
-"CircuitBreaker": Cloud-Native E-Commerce API Gateway/
+```
+["CircuitBreaker": Cloud-Native E-Commerce API Gateway]/
 ├── react-frontend(UI)/                  # React UI Client
 │   ├── public/
 │   ├── src/
@@ -40,3 +41,4 @@ ARCHITECTURE ------->
 └── proxy/                           # Envoy Proxy configuration
     ├── envoy.yaml                   # Translates React (grpc-web) to Spring Boot (gRPC)
     └── Dockerfile
+```
