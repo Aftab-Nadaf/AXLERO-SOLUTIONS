@@ -8,9 +8,4 @@ Basic need:-----
 
 
 Run Frontend(UI):----  npm run dev
-Run Backend(Server):---mvn Spring-boot:run
-
-
-Default Link:---->
-UI--- http://localhost:5173
-Backend----http://localhost:8080
+Run Backend(Server):---
