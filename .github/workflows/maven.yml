@@ -18,8 +18,8 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
           cache: maven
-          cache-dependency-path: 'spring-backend (BACKEND)/pom.xml'
+          cache-dependency-path: 'backend/pom.xml'
 
       - name: Build with Maven
-        working-directory: 'spring-backend (BACKEND)'
+        working-directory: 'backend'
         run: mvn -B package
