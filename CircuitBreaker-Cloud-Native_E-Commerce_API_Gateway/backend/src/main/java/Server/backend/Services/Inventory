@@ -1,0 +1,50 @@
+package Server.backend.service;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "inventory")
+public class Inventory {
+
+    @Id
+    private Long productId;
+
+    private Integer availableQuantity;
+
+    private String status;
+
+    public Inventory() {
+    }
+
+    public Inventory(Long productId, Integer availableQuantity, String status) {
+        this.productId = productId;
+        this.availableQuantity = availableQuantity;
+        this.status = status;
+    }
+
+    public Long getProductId() {
+        return productId;
+    }
+
+    public void setProductId(Long productId) {
+        this.productId = productId;
+    }
+
+    public Integer getAvailableQuantity() {
+        return availableQuantity;
+    }
+
+    public void setAvailableQuantity(Integer availableQuantity) {
+        this.availableQuantity = availableQuantity;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+}
