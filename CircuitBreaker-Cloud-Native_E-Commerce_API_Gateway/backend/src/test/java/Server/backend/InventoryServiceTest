@@ -1,0 +1,81 @@
+package Server.backend;
+
+import Server.backend.service.Inventory;
+import Server.backend.service.InventoryService;
+import Server.backend.repository.InventoryRepository;
+import Server.backend.exception.InventoryNotFoundException;
+
+import org.junit.jupiter.api.Test;
+
+import java.util.List;
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
+
+public class InventoryServiceTest {
+
+    @Test
+    void getAllInventory_shouldReturnInventoryList() {
+
+        InventoryRepository repository =
+                mock(InventoryRepository.class);
+
+        InventoryService service =
+                new InventoryService(repository);
+
+        Inventory inventory =
+                new Inventory(101L, 25, "IN_STOCK");
+
+        when(repository.findAll())
+                .thenReturn(List.of(inventory));
+
+        List<Inventory> result =
+                service.getAllInventory();
+
+        assertEquals(1, result.size());
+        assertEquals(101L, result.get(0).getProductId());
+        assertEquals(25, result.get(0).getAvailableQuantity());
+    }
+
+    @Test
+    void getInventoryByProductId_shouldReturnInventory() {
+
+        InventoryRepository repository =
+                mock(InventoryRepository.class);
+
+        InventoryService service =
+                new InventoryService(repository);
+
+        Inventory inventory =
+                new Inventory(101L, 25, "IN_STOCK");
+
+        when(repository.findById(101L))
+                .thenReturn(Optional.of(inventory));
+
+        Inventory result =
+                service.getInventoryByProductId(101L);
+
+        assertEquals(101L, result.getProductId());
+        assertEquals(25, result.getAvailableQuantity());
+        assertEquals("IN_STOCK", result.getStatus());
+    }
+
+    @Test
+    void getInventoryByProductId_shouldThrowExceptionForInvalidId() {
+
+        InventoryRepository repository =
+                mock(InventoryRepository.class);
+
+        InventoryService service =
+                new InventoryService(repository);
+
+        when(repository.findById(999L))
+                .thenReturn(Optional.empty());
+
+        assertThrows(
+                InventoryNotFoundException.class,
+                () -> service.getInventoryByProductId(999L)
+        );
+    }
+}

@@ -1,0 +1,32 @@
+package Server.backend.service;
+
+import Server.backend.exception.InventoryNotFoundException;
+import Server.backend.repository.InventoryRepository;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+public class InventoryService {
+
+    private final InventoryRepository inventoryRepository;
+
+    public InventoryService(InventoryRepository inventoryRepository) {
+        this.inventoryRepository = inventoryRepository;
+    }
+
+    public List<Inventory> getAllInventory() {
+        return inventoryRepository.findAll();
+    }
+
+    public Inventory getInventoryByProductId(Long productId) {
+
+        return inventoryRepository.findById(productId)
+                .orElseThrow(() ->
+                        new InventoryNotFoundException(productId));
+    }
+
+    public Inventory addInventory(Inventory inventory) {
+        return inventoryRepository.save(inventory);
+    }
+}

@@ -1,0 +1,42 @@
+package Server.backend.controller;
+
+import Server.backend.service.Inventory;
+import Server.backend.service.InventoryService;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/api/inventory")
+public class InventoryController {
+
+    private final InventoryService inventoryService;
+
+    public InventoryController(InventoryService inventoryService) {
+        this.inventoryService = inventoryService;
+    }
+
+    // GET /api/inventory
+    @GetMapping
+    public List<Inventory> getAllInventory() {
+        return inventoryService.getAllInventory();
+    }
+
+    // GET /api/inventory/{productId}
+    @GetMapping("/{productId}")
+    public Inventory getInventoryByProductId(
+            @PathVariable Long productId) {
+
+        return inventoryService.getInventoryByProductId(productId);
+    }
+
+    // POST /api/inventory
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public Inventory addInventory(
+            @RequestBody Inventory inventory) {
+
+        return inventoryService.addInventory(inventory);
+    }
+}
