@@ -1,13 +1,15 @@
-package com.axlero.productservice;
+package com.axlero.recommendationservice;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class ProductController {
-
-    @GetMapping
+public class RecommendationController {
+	@GetMapping("/")
     public String test() {
-        return "Product Service is working";
+        return "Recommendation Service is working";
     }
 }
+
+
+
