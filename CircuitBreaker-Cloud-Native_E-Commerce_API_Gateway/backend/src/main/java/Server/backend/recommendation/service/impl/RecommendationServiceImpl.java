@@ -1,5 +1,6 @@
 package Server.backend.recommendation.service.impl;
 
+import Server.backend.recommendation.exception.RecommendationNotFoundException;
 import Server.backend.recommendation.model.Recommendation;
 import Server.backend.recommendation.repository.RecommendationRepository;
 import Server.backend.recommendation.service.RecommendationService;
@@ -29,7 +30,8 @@ public class RecommendationServiceImpl implements RecommendationService {
     @Override
     public Recommendation getRecommendationById(Long id) {
         return recommendationRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Recommendation not found"));
+                .orElseThrow(() ->
+                        new RecommendationNotFoundException("Recommendation not found with id: " + id));
     }
 
     @Override

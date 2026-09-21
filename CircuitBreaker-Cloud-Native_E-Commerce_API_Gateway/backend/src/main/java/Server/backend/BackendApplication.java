@@ -6,20 +6,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 
-
-@RestController 
+@RestController
 @SpringBootApplication
 public class BackendApplication {
-	@RequestMapping("/")
-	String greet(){
-		
-		return "Hello World";
-	}
+    @RequestMapping("/")
+    String greet() {
 
-	public static void main(String[] args) {
-		System.out.println("The Server Start......");
-		System.out.println("Click----->        "+ "http://localhost:8080");
-		SpringApplication.run(BackendApplication.class, args);
-	}
+        return "Hello World";
+    }
+
+    public static void main(String[] args) {
+        System.out.println("The Server Start......");
+        System.out.println("Click----->        " + "http://localhost:8080");
+        SpringApplication.run(BackendApplication.class, args);
+    }
 
 }
