@@ -1,6 +1,7 @@
 package Server.backend.recommendation.service.impl;
 
-import Server.backend.recommendation.exception.RecommendationNotFoundException;
+import Server.backend.recommendation.dto.RecommendationItem;
+import Server.backend.recommendation.dto.RecommendationResponse;
 import Server.backend.recommendation.model.Recommendation;
 import Server.backend.recommendation.repository.RecommendationRepository;
 import Server.backend.recommendation.service.RecommendationService;
@@ -18,24 +19,19 @@ public class RecommendationServiceImpl implements RecommendationService {
     }
 
     @Override
-    public List<Recommendation> getAllRecommendations() {
-        return recommendationRepository.findAll();
-    }
+    public RecommendationResponse getRecommendationsByUserId(Long userId) {
 
-    @Override
-    public Recommendation createRecommendation(Recommendation recommendation) {
-        return recommendationRepository.save(recommendation);
-    }
+        List<Recommendation> recommendations =
+                recommendationRepository.findByUserId(userId);
 
-    @Override
-    public Recommendation getRecommendationById(Long id) {
-        return recommendationRepository.findById(id)
-                .orElseThrow(() ->
-                        new RecommendationNotFoundException("Recommendation not found with id: " + id));
-    }
+        List<RecommendationItem> items = recommendations.stream()
+                .map(recommendation ->
+                        new RecommendationItem(
+                                recommendation.getProductId(),
+                                recommendation.getName()
+                        ))
+                .toList();
 
-    @Override
-    public void deleteRecommendation(Long id) {
-        recommendationRepository.deleteById(id);
+        return new RecommendationResponse(userId, items);
     }
 }

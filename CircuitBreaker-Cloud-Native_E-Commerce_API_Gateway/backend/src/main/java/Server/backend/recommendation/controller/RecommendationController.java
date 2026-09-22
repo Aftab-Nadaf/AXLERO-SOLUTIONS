@@ -1,11 +1,11 @@
 package Server.backend.recommendation.controller;
 
-import Server.backend.recommendation.model.Recommendation;
+import Server.backend.recommendation.dto.RecommendationResponse;
 import Server.backend.recommendation.service.RecommendationService;
-import jakarta.validation.Valid;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/recommendations")
@@ -17,24 +17,11 @@ public class RecommendationController {
         this.recommendationService = recommendationService;
     }
 
-    @GetMapping
-    public List<Recommendation> getRecommendations() {
-        return recommendationService.getAllRecommendations();
-    }
+    @GetMapping("/{userId}")
+    public RecommendationResponse getRecommendationsByUserId(
+            @PathVariable Long userId) {
 
-    @PostMapping
-    public Recommendation createRecommendation(@Valid @RequestBody Recommendation recommendation) {
-        return recommendationService.createRecommendation(recommendation);
-    }
-
-    @GetMapping("/{id}")
-    public Recommendation getRecommendationById(@PathVariable Long id) {
-        return recommendationService.getRecommendationById(id);
-    }
-
-    @DeleteMapping("/{id}")
-    public void deleteRecommendation(@PathVariable Long id) {
-        recommendationService.deleteRecommendation(id);
+        return recommendationService.getRecommendationsByUserId(userId);
     }
 
     @GetMapping("/test/failure")

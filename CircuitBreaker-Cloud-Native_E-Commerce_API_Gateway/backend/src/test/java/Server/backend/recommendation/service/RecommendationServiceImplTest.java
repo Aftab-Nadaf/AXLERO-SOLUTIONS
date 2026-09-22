@@ -1,6 +1,6 @@
 package Server.backend.recommendation.service;
 
-import Server.backend.recommendation.exception.RecommendationNotFoundException;
+import Server.backend.recommendation.dto.RecommendationResponse;
 import Server.backend.recommendation.model.Recommendation;
 import Server.backend.recommendation.repository.RecommendationRepository;
 import Server.backend.recommendation.service.impl.RecommendationServiceImpl;
@@ -11,9 +11,9 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
-import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -27,78 +27,47 @@ class RecommendationServiceImplTest {
     private RecommendationServiceImpl recommendationService;
 
     @Test
-    void shouldReturnAllRecommendations() {
-        Recommendation recommendation =
-                new Recommendation(1L, 1L, 101L, "Popular product");
+    void shouldReturnRecommendationsByUserId() {
 
-        when(recommendationRepository.findAll())
+        Recommendation recommendation =
+                new Recommendation(
+                        1L,
+                        501L,
+                        101L,
+                        "Laptop",
+                        "Popular product"
+                );
+
+        when(recommendationRepository.findByUserId(501L))
                 .thenReturn(List.of(recommendation));
 
-        List<Recommendation> result =
-                recommendationService.getAllRecommendations();
-
-        assertEquals(1, result.size());
-        assertEquals(101L, result.get(0).getProductId());
-
-        verify(recommendationRepository).findAll();
-    }
-
-    @Test
-    void shouldCreateRecommendation() {
-        Recommendation recommendation =
-                new Recommendation(null, 1L, 101L, "Popular product");
-
-        Recommendation savedRecommendation =
-                new Recommendation(1L, 1L, 101L, "Popular product");
-
-        when(recommendationRepository.save(recommendation))
-                .thenReturn(savedRecommendation);
-
-        Recommendation result =
-                recommendationService.createRecommendation(recommendation);
+        RecommendationResponse result =
+                recommendationService.getRecommendationsByUserId(501L);
 
         assertNotNull(result);
-        assertEquals(1L, result.getId());
-        assertEquals(101L, result.getProductId());
+        assertEquals(501L, result.getUserId());
+        assertEquals(1, result.getRecommendations().size());
+        assertEquals(101L,
+                result.getRecommendations().get(0).getProductId());
+        assertEquals("Laptop",
+                result.getRecommendations().get(0).getName());
 
-        verify(recommendationRepository).save(recommendation);
+        verify(recommendationRepository).findByUserId(501L);
     }
 
     @Test
-    void shouldReturnRecommendationById() {
-        Recommendation recommendation =
-                new Recommendation(1L, 1L, 101L, "Popular product");
+    void shouldReturnEmptyRecommendationsWhenUserHasNoRecommendations() {
 
-        when(recommendationRepository.findById(1L))
-                .thenReturn(Optional.of(recommendation));
+        when(recommendationRepository.findByUserId(999L))
+                .thenReturn(List.of());
 
-        Recommendation result =
-                recommendationService.getRecommendationById(1L);
+        RecommendationResponse result =
+                recommendationService.getRecommendationsByUserId(999L);
 
         assertNotNull(result);
-        assertEquals(1L, result.getId());
-        assertEquals(101L, result.getProductId());
+        assertEquals(999L, result.getUserId());
+        assertEquals(0, result.getRecommendations().size());
 
-        verify(recommendationRepository).findById(1L);
-    }
-
-    @Test
-    void shouldThrowExceptionWhenRecommendationNotFound() {
-        when(recommendationRepository.findById(999L))
-                .thenReturn(Optional.empty());
-
-        assertThrows(
-                RecommendationNotFoundException.class,
-                () -> recommendationService.getRecommendationById(999L)
-        );
-
-        verify(recommendationRepository).findById(999L);
-    }
-
-    @Test
-    void shouldDeleteRecommendation() {
-        recommendationService.deleteRecommendation(1L);
-
-        verify(recommendationRepository).deleteById(1L);
+        verify(recommendationRepository).findByUserId(999L);
     }
 }
