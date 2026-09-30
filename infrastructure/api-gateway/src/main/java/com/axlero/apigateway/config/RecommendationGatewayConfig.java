@@ -11,6 +11,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.function.RouterFunction;
 import org.springframework.web.servlet.function.ServerResponse;
+import static org.springframework.cloud.gateway.server.mvc.filter.RetryFilterFunctions.retry;
+import java.util.Set;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 
 @Configuration
 public class RecommendationGatewayConfig {
@@ -26,6 +30,14 @@ public class RecommendationGatewayConfig {
                 .before(stripPrefix(1))
 
                 .filter(
+                	    retry(config -> config
+                	        .setRetries(2)
+                	        .setSeries(Set.of(HttpStatus.Series.SERVER_ERROR))
+                	        .setMethods(Set.of(HttpMethod.GET))
+                	        .setExceptions(Set.of(Exception.class))
+                	    )
+                	)
+                	.filter(
                 	    circuitBreaker(
                 	        config -> config
                 	            .setId("recommendationCircuitBreaker")
