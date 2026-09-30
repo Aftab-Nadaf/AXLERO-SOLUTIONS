@@ -9,6 +9,8 @@ spring:
     gateway:
       server:
         webmvc:
+          use-framework-retry-filter: true
+
           routes:
 
             # Product Service
