@@ -1,5 +1,6 @@
 package com.axlero.recommendationservice.service;
 
+<<<<<<< HEAD
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -80,5 +81,26 @@ public class RecommendationServiceImpl implements RecommendationService {
         } catch (JsonProcessingException e) {
             throw new RuntimeException("Failed to parse recommendation payload", e);
         }
+=======
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
+import com.axlero.recommendationservice.dto.RecommendationResponse;
+import com.axlero.recommendationservice.dto.RecommendedProduct;
+
+@Service
+public class RecommendationServiceImpl implements RecommendationService {
+
+	@Override
+	public RecommendationResponse getRecommendations(int userId) {
+
+        List<RecommendedProduct> products = List.of(
+            new RecommendedProduct(101, "Laptop"),
+            new RecommendedProduct(102, "Wireless Mouse")
+        );
+
+        return new RecommendationResponse(userId, products);
+>>>>>>> 974167375ba18699e9e01bb6b0fc96b5f0f0987f
     }
 }

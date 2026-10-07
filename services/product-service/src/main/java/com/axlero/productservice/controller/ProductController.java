@@ -1,5 +1,6 @@
 package com.axlero.productservice.controller;
 
+<<<<<<< HEAD
 import com.axlero.productservice.entity.Product;
 import com.axlero.productservice.service.ProductService;
 import java.util.List;
@@ -44,4 +45,36 @@ public class ProductController{
         return "Error occurred while fetching product";
     }
 
+=======
+import java.util.List;
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.axlero.productservice.dto.ProductResponse;
+import com.axlero.productservice.service.PoductService;
+
+@RestController
+@RequestMapping("/products")
+public class ProductController {
+
+    private final PoductService productService;
+	
+
+    public ProductController(PoductService productService) {
+        this.productService = productService;
+    }
+
+    @GetMapping
+    public List<ProductResponse> getAllProducts() {
+        return productService.getAllProducts();
+    }
+
+    @GetMapping("/{productId}")
+    public ProductResponse getProductById(@PathVariable int productId) {
+        return productService.getProductById(productId);
+    }
+>>>>>>> 974167375ba18699e9e01bb6b0fc96b5f0f0987f
 }
