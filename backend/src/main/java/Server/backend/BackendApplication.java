@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import jakarta.ws.rs.GET;
 
 
 @RestController 
@@ -16,6 +17,13 @@ public class BackendApplication {
 		return "Hello World";
 	}
 
+	@RequestMapping("/error")
+	@GET 
+	String errorShow(){
+		return "error catch";
+	}
+
+	
 	public static void main(String[] args) {
 		System.out.println("The Server Start......");
 		System.out.println("Click----->        "+ "http://localhost:8080");

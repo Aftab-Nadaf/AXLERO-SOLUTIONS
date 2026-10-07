@@ -1,122 +1,69 @@
-import { useState } from 'react'
-import heroImg from './assets/hero.png'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import './App.css'
+import { FaCartShopping } from "react-icons/fa6";
+import { IoMdHome } from "react-icons/io";
+import { IoCubeOutline, IoDocumentTextOutline, IoWarningOutline } from "react-icons/io5";
+import { CiCircleAlert } from "react-icons/ci";
+import { GoGear } from "react-icons/go";
+import { FaRegFileAlt } from "react-icons/fa";
+import { PiShareNetworkBold } from "react-icons/pi";
+import { FaGaugeHigh, FaShieldHalved } from 'react-icons/fa6';
 
-function App() {
-  const [count, setCount] = useState(0)
 
+
+
+
+const App = () => {
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
+    <div className="maincontainer">
+      <div className="sidebarcontainer">
+        <div className="logocontainer">
+          <div><FaCartShopping /></div>
+          <div>
+            <h2>CircuitBreaker</h2>
+            <p>E-commerce Platform</p>
+          </div>
         </div>
+        <ul>
+          <li><span><IoMdHome /></span>Dashboard</li>
+          <li><span><IoCubeOutline /></span>Services</li>
+          <li><span><CiCircleAlert /></span>Circuit Breakers</li>
+          <li><span><FaGaugeHigh /></span>Rate Limiting</li>
+          <li><span><FaShieldHalved /></span>Bulkheads</li>
+          <li><span><PiShareNetworkBold /></span>Distributed Tracing</li>
+          <li><span><FaRegFileAlt /></span>API Gateway</li>
+          <li><span><IoDocumentTextOutline /></span>Logs</li>
+          <li><span><IoWarningOutline /></span>Chaos Testing</li>
+          <li><span><GoGear /></span>Settings</li>
+        </ul>
+        <div className="versionDetail">
+          <p>CircuitBreaker Project v1.0.0</p>
+        </div>
+      </div>
+      <div className="maincontentcontainer">
+        <div className="Appdetailcontainer"></div>
         <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.tsx</code> and save to test <code>HMR</code>
-          </p>
+          <div className="servicedetailcontainer">
+            <div className="runupcontainer"></div>
+            <div className="latencycontainer"></div>
+          </div>
+          <div className="servicecontainer">
+            <div className="overview"></div>
+            <div className="testercontainer"></div>
+          </div>
+          <div className="extramovementcontainer">
+            <div className="circuitcontainer"></div>
+            <div className="ratelimitingcontainer"></div>
+            <div className="bulkheadcontainer"></div>
+          </div>
+          <div className="actvitycontainer">
+            <div className="requestcontainer"></div>
+            <div className="distributetracingcontainer"></div>
+            <div className="logscontainer"></div>
+          </div>
         </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
+      </div>
+    </div>
+  );
 
-      <div className="ticks"></div>
-
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
-
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
-  )
 }
 
-export default App
+export default App;
