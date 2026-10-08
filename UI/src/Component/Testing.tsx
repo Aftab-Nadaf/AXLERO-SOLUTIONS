@@ -4,6 +4,7 @@ import { BiSolidPieChartAlt } from "react-icons/bi";
 import { FiAlertTriangle } from "react-icons/fi";
 import { IoReload } from "react-icons/io5";
 import { CiCircleAlert } from "react-icons/ci";
+import "../index.css"
 
 const Testing = () =>{
     return (
