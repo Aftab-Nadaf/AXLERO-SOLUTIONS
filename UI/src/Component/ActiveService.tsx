@@ -1,49 +1,87 @@
-import { IoCubeOutline } from "react-icons/io5";
-import { CiCircleAlert } from "react-icons/ci";
-import { TbActivityHeartbeat } from "react-icons/tb";
-import { FaArrowUp,FaArrowDown  } from "react-icons/fa";
-import ResponseTime from "./ResponseTime";
-import "../index.css"
+import { Activity, Boxes, CircleAlert, PackageCheck } from "lucide-react";
+import type { DashboardData, InventoryApiStatus, InventoryLookup } from "../api/dashboardApi";
 
-
-const ActiveService = () =>{
-    let reqlist = null;
-    return(
-        <div className="Bcontainer">
-            <div className="totalservicecontainer">
-                <div className="b1 ml-4 ">
-                    <div><IoCubeOutline  size={50} color="green" className="bg-emerald-100"/></div>
-                    <div className="b2 grid">
-                        <h4>Link with API</h4>
-                        <h5>Services Up</h5>
-                        <p>LINK with API</p>
-                    </div>
-                </div>
-                <div className="b1">
-                    <CiCircleAlert size={50} color="red" className="bg-red-100"/>
-                    <div className="b2">
-                        <h4>LINK with API</h4>
-                        <h5>Services Down</h5>
-                        <p>LINK with API</p>
-                    </div>
-                </div>
-                <div className="b5">
-                    <div className="b6"><TbActivityHeartbeat size={50} color="viol9et"/></div>
-                    <div className="b3">
-                        <h4>LINK with API</h4>
-                        <h5>Total Request/min</h5>
-                        <p>vs last 5 minutes</p>
-                    </div>
-                    <div>
-                        {reqlist?<FaArrowUp />:<FaArrowDown />}
-                    </div>
-                </div>
-            </div>
-            <div className="showtakentime">
-                <ResponseTime />
-            </div>
-        </div>
-    );
+interface ActiveServiceProps {
+  data: DashboardData | null;
+  isLoading: boolean;
 }
+
+function getStatusLabel(status: InventoryApiStatus) {
+  switch (status) {
+    case "online":
+      return "Connected";
+    case "partial":
+      return "Partially connected";
+    case "unavailable":
+      return "Unavailable";
+    case "unknown":
+      return "Not checked";
+  }
+}
+
+const ActiveService = ({ data, isLoading }: ActiveServiceProps) => {
+  const inventoryRecords = data
+    ? [...data.inventoryByProductId.values()].filter(
+        (result): result is Extract<InventoryLookup, { kind: "loaded" }> =>
+          result.kind === "loaded",
+      )
+    : [];
+  const failedInventoryChecks = data
+    ? [...data.inventoryByProductId.values()].filter((result) => result.kind === "failed").length
+    : 0;
+  const availableUnits = inventoryRecords.reduce(
+    (total, result) => total + result.inventory.availableQuantity,
+    0,
+  );
+
+  return (
+    <section className="totalservicecontainer" aria-label="Catalog and inventory summary">
+      <article className="metric-card">
+        <div className="metric-card-top">
+          <div>
+            <p className="metric-label">Product API</p>
+            <p className="metric-value">{data ? "Online" : isLoading ? "…" : "Offline"}</p>
+          </div>
+          <span className="metric-icon is-success"><Boxes size={19} /></span>
+        </div>
+        <p className="metric-detail">
+          {data ? `${data.products.length} catalog products` : "Catalog service connection"}
+        </p>
+      </article>
+
+      <article className="metric-card">
+        <div className="metric-card-top">
+          <div>
+            <p className="metric-label">Inventory API</p>
+            <p className="metric-value">
+              {isLoading && !data ? "…" : data ? getStatusLabel(data.inventoryStatus) : "Unknown"}
+            </p>
+          </div>
+          <span className="metric-icon is-warning"><PackageCheck size={19} /></span>
+        </div>
+        <p className="metric-detail">
+          {data ? `${inventoryRecords.length} stock records loaded` : "Stock service connection"}
+        </p>
+      </article>
+
+      <article className="metric-card">
+        <div className="metric-card-top">
+          <div>
+            <p className="metric-label">Available units</p>
+            <p className="metric-value">
+              {data ? availableUnits.toLocaleString() : isLoading ? "…" : "—"}
+            </p>
+          </div>
+          <span className="metric-icon"><Activity size={19} /></span>
+        </div>
+        <p className="metric-detail">
+          {failedInventoryChecks > 0
+            ? <><CircleAlert size={12} aria-hidden="true" /> {failedInventoryChecks} stock check{failedInventoryChecks === 1 ? "" : "s"} failed</>
+            : "Across loaded inventory records"}
+        </p>
+      </article>
+    </section>
+  );
+};
 
 export default ActiveService;

@@ -1,28 +1,17 @@
-import {IoDocumentTextOutline} from "react-icons/io5";
+import { FileText } from "lucide-react";
+import TelemetryNotice from "./TelemetryNotice";
 
+const Logging = () => (
+  <section className="telemetry-card" aria-labelledby="recent-events-title">
+    <div className="panel-heading">
+      <span className="metric-icon"><FileText size={19} /></span>
+      <div>
+        <h3 id="recent-events-title">Recent events</h3>
+        <p>Latest service activity</p>
+      </div>
+    </div>
+    <TelemetryNotice message="An events endpoint is not configured for this dashboard." />
+  </section>
+);
 
-const Logging = () =>
-{
-    return (
-        <div className="container">
-            <div>
-                <IoDocumentTextOutline />
-                <h4>Recent Events</h4>
-                <a href="">View All</a>
-            </div>
-            <table>
-                <thead>
-                    <th>
-                        <td>Time</td>
-                        <td>Service</td>
-                        <td>Event</td>
-                    </th>
-                </thead>
-                <tbody>
-                    <tr></tr>
-                </tbody>
-            </table>
-        </div>
-    );
-}
 export default Logging;

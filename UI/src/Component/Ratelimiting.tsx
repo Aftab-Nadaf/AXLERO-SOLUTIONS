@@ -1,24 +1,17 @@
-import {ChartNoAxesColumn} from "lucide-react";
+import { Gauge } from "lucide-react";
+import TelemetryNotice from "./TelemetryNotice";
 
-
-const RateLimiting = () =>{
-    return(
-        <div className="container">
-            <div>
-                <ChartNoAxesColumn /> 
-                <h2>Circuit Breaker States</h2>
-            </div>
-            <div>
-                <table>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                </table>
-            </div>
-        </div>
-    );
-}
+const RateLimiting = () => (
+  <section className="telemetry-card" aria-labelledby="rate-limiting-title">
+    <div className="panel-heading">
+      <span className="metric-icon"><Gauge size={19} /></span>
+      <div>
+        <h3 id="rate-limiting-title">Rate limiting</h3>
+        <p>Request limits and usage</p>
+      </div>
+    </div>
+    <TelemetryNotice message="Rate-limit usage metrics are not exposed by the connected APIs." />
+  </section>
+);
 
 export default RateLimiting;

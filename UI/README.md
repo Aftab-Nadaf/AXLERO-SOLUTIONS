@@ -76,3 +76,14 @@ export default defineConfig([
 ])
 
 ```
+
+## Dashboard API configuration
+
+The dashboard loads the catalog with `GET /api/products` and checks inventory with
+`GET /api/inventory/{productId}`. During development, Vite proxies `/api` to the
+API gateway at `http://localhost:8083`. Set `VITE_API_BASE_URL` in a local
+`.env.local` file to override the API base URL (the value should include `/api`).
+
+Recommendation and resilience telemetry/control endpoints are not currently
+routed by the gateway, so their dashboard panels report that data is unavailable
+instead of displaying sample metrics.

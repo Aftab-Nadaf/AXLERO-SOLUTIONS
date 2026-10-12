@@ -1,0 +1,63 @@
+@import "tailwindcss";
+:root{
+    --grid-col-method: 25% 75%;
+    --grid-row-method: auto auto;
+    --main-container: 20% 80%;
+} 
+.con1{
+    grid-template-columns: var(--grid-col-method);
+    align-content:start;
+}
+.maincon{
+    background-color: whitesmoke;
+    grid-template-columns: var(--main-container);
+}
+.navlist{
+    /* */
+}
+.lis{
+    display: grid;
+    grid-template-columns: min-content max-content;
+    color: whitesmoke;
+    border-radius: 5px;
+    padding: 7px 0;
+
+
+}
+.lis:hover{
+    background-color:rgba(41, 41, 178, 0.4);
+    border-radius: 10px;
+}
+
+footer{
+    color: whitesmoke;
+}
+footer p{
+    margin-left: 15px;
+}
+.titleicon{
+    position: relative;
+    margin-left: 0px;
+    margin-bottom: 8px;
+}
+.iconbar{
+    height: 40px;
+    width: 25px;
+    margin: -7px 20px;
+}
+h2{
+    /**/
+}
+.header1{
+    grid-template-columns: auto auto;
+}
+.para1{
+    grid-template-columns: 10% max-content min-content;
+}
+.mainbox1{
+    grid-template-columns: auto auto auto;
+}
+.mainbox1 div{
+color: white;
+
+}
