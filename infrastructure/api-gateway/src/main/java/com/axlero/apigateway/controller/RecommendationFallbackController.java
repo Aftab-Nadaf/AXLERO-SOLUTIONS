@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
 
 import com.axlero.apigateway.dto.RecommendationResponse;
 import com.axlero.apigateway.dto.RecommendedProduct;
@@ -14,7 +15,7 @@ import jakarta.servlet.http.HttpServletRequest;
 public class RecommendationFallbackController {
 
     @GetMapping("/fallback/recommendations")
-    public RecommendationResponse recommendationFallback(
+    public ResponseEntity<RecommendationResponse> recommendationFallback(
             HttpServletRequest request) {
 
         String originalUri =
@@ -39,6 +40,9 @@ public class RecommendationFallbackController {
                 )
         );
 
-        return new RecommendationResponse(userId, products);
+        return ResponseEntity.ok()
+                .header("X-Recommendation-Source", "fallback")
+                .header("Access-Control-Expose-Headers", "X-Recommendation-Source")
+                .body(new RecommendationResponse(userId, products));
     }
 }

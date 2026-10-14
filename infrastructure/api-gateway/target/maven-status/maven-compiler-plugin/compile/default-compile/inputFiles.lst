@@ -1,1 +1,7 @@
-C:\Users\kkysh\OneDrive\Desktop\Axlero Solution\AXLERO-SOLUTIONS\CircuitBreaker-Cloud-Native_E-Commerce_API_Gateway\backend\src\main\java\Server\backend\BackendApplication.java
+C:\Users\kkysh\OneDrive\Desktop\Axlero Solution\AXLERO-SOLUTIONS-1\infrastructure\api-gateway\src\main\java\com\axlero\apigateway\ApiGatewayApplication.java
+C:\Users\kkysh\OneDrive\Desktop\Axlero Solution\AXLERO-SOLUTIONS-1\infrastructure\api-gateway\src\main\java\com\axlero\apigateway\config\RecommendationGatewayConfig.java
+C:\Users\kkysh\OneDrive\Desktop\Axlero Solution\AXLERO-SOLUTIONS-1\infrastructure\api-gateway\src\main\java\com\axlero\apigateway\controller\RecommendationFallbackController.java
+C:\Users\kkysh\OneDrive\Desktop\Axlero Solution\AXLERO-SOLUTIONS-1\infrastructure\api-gateway\src\main\java\com\axlero\apigateway\controller\ZipkinTraceController.java
+C:\Users\kkysh\OneDrive\Desktop\Axlero Solution\AXLERO-SOLUTIONS-1\infrastructure\api-gateway\src\main\java\com\axlero\apigateway\dto\RecommendationResponse.java
+C:\Users\kkysh\OneDrive\Desktop\Axlero Solution\AXLERO-SOLUTIONS-1\infrastructure\api-gateway\src\main\java\com\axlero\apigateway\dto\RecommendedProduct.java
+C:\Users\kkysh\OneDrive\Desktop\Axlero Solution\AXLERO-SOLUTIONS-1\infrastructure\api-gateway\src\main\java\com\axlero\apigateway\filter\ApiRateLimitFilter.java

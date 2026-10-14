@@ -1,49 +1,52 @@
-import { Zap } from "lucide-react";
-import { MdOutlineLightbulb } from "react-icons/md";
-import { BiSolidPieChartAlt } from "react-icons/bi";
-import { FiAlertTriangle } from "react-icons/fi";
-import { IoReload } from "react-icons/io5";
-import { CiCircleAlert } from "react-icons/ci";
-import "../index.css"
+import { Activity, HeartPulse } from "lucide-react";
+import type { TelemetryResult } from "../api/dashboardApi";
+import TelemetryNotice from "./TelemetryNotice";
 
-const Testing = () => {
-    return (
-        <div className="tcontainer">
-            <div className="t1">
-                <Zap size={50} className="my-auto" />
-                <div>
-                    <h4 className="font-bold">Chaos testing</h4>
-                    <p className="text-gray-600">Demo controls for resilience scenarios</p>
-                </div>
-            </div>
-            <div className="t2">
-                <MdOutlineLightbulb size={50} color="violet"/>
-                <div>
-                    <h4>Controls unavailable</h4>
-                    <p>A chaos-testing API has not been configured for this dashboard.</p>
-                </div>
-            </div>
-            <div className="t3">
-                <button type="button" disabled className="t4 p-2">
-                    <BiSolidPieChartAlt size={30}/>
-                    <span>Trigger latency (5s)</span>
-                </button>
-                <button type="button" disabled className="t4 p-2">
-                    <FiAlertTriangle size={30}/>
-                    <span>Simulate failure</span>
-                </button>
-                <button type="button" disabled className="t4 p-2">
-                    <IoReload size={30}/>
-                    <span>Reset service</span>
-                </button>
-            </div>
-            <p className="testing-note">
-                <CiCircleAlert size={30} />
-                Resilience actions stay disabled until a compatible control endpoint is available.
-            </p>
-        </div>
-    );
-
+interface GatewayHealthProps {
+  health: TelemetryResult<{ status: string; groups: string[] }> | null;
+  isLoading: boolean;
 }
+
+const Testing = ({ health, isLoading }: GatewayHealthProps) => {
+  const data = health?.data;
+  const isHealthy = data?.status.toUpperCase() === "UP";
+
+  return (
+    <section className="tcontainer" aria-labelledby="gateway-health-title">
+      <div className="t1">
+        <HeartPulse size={37} aria-hidden="true" />
+        <div>
+          <h4 id="gateway-health-title">API Gateway health</h4>
+          <p>Live status from the gateway Actuator</p>
+        </div>
+      </div>
+      {data ? (
+        <>
+          <div className={`t2${isHealthy ? " is-healthy" : " is-failure"}`} role="status">
+            <Activity size={25} aria-hidden="true" />
+            <div>
+              <h4>{data.status.toUpperCase()}</h4>
+              <p>GET /actuator/health</p>
+            </div>
+          </div>
+          {data.groups.length > 0 && (
+            <div className="gateway-health-groups">
+              <span>Health groups</span>
+              {data.groups.map((group) => <code key={group}>{group}</code>)}
+            </div>
+          )}
+        </>
+      ) : (
+        <TelemetryNotice
+          message={isLoading ? "Checking API Gateway health…" : health?.error ?? "API Gateway health is unavailable."}
+        />
+      )}
+      <p className="testing-note">
+        <Activity size={15} aria-hidden="true" />
+        No backend resilience controls are exposed through this gateway.
+      </p>
+    </section>
+  );
+};
 
 export default Testing;

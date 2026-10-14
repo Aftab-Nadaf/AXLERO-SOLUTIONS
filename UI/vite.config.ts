@@ -16,6 +16,22 @@ export default defineConfig({
         target: "http://localhost:8083",
         changeOrigin: true,
       },
+      "/products": {
+        target: "http://localhost:8083",
+        changeOrigin: true,
+      },
+      "/inventory": {
+        target: "http://localhost:8083",
+        changeOrigin: true,
+      },
+      "/recommendations": {
+        target: "http://localhost:8083",
+        changeOrigin: true,
+      },
+      "/actuator": {
+        target: "http://localhost:8083",
+        changeOrigin: true,
+      },
     },
   },
 })
