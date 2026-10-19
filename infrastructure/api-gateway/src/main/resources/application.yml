@@ -44,7 +44,13 @@ management:
   endpoints:
     web:
       exposure:
-        include: health,metrics
+        include: health,metrics,prometheus,circuitbreakers
+  tracing:
+    sampling:
+      probability: 1.0
+    export:
+      zipkin:
+        endpoint: http://localhost:9411/api/v2/spans
 app:
   rate-limit:
     capacity: 100
