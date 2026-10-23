@@ -35,14 +35,14 @@ public class RecommendationGatewayConfig {
                 )
                 .before(stripPrefix(1))
 
-                .filter(
-                    retry(config -> config
-                        .setRetries(2)
-                        .setSeries(Set.of(HttpStatus.Series.SERVER_ERROR))
-                        .setMethods(Set.of(HttpMethod.GET))
-                        .setExceptions(Set.of(Exception.class))
-                    )
-                )
+//                .filter(
+//                    retry(config -> config
+//                        .setRetries(2)
+//                        .setSeries(Set.of(HttpStatus.Series.SERVER_ERROR))
+//                        .setMethods(Set.of(HttpMethod.GET))
+//                        .setExceptions(Set.of(Exception.class))
+//                    )
+//                )
                 .filter(
                     circuitBreaker(
                         config -> config

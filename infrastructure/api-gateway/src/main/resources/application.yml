@@ -4,6 +4,10 @@ server:
 spring:
   application:
     name: API-GATEWAY
+  http:
+      clients:
+        connect-timeout: 5s
+        read-timeout: 10s
 
   cloud:
     gateway:
@@ -39,7 +43,12 @@ resilience4j:
         failureRateThreshold: 50
         waitDurationInOpenState: 10s
         permittedNumberOfCallsInHalfOpenState: 2
-        automaticTransitionFromOpenToHalfOpenEnabled: true
+        automaticTransitionFromOpenToHalfOpenEnabled: true	
+  timelimiter:
+    instances:
+      recommendationCircuitBreaker:
+        timeoutDuration: 5s
+        cancelRunningFuture: true
 management:
   endpoints:
     web:

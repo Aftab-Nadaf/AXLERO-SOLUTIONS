@@ -21,8 +21,11 @@ public class RecommendationController {
 
     private final RecommendationService recommendationservice;
 
-    // Temporary flag for controlled failure testing
+    //  flag for controlled failure testing
     private final AtomicBoolean failureEnabled = new AtomicBoolean(false);
+    
+    //  flag for controlled delay testing
+    private final AtomicBoolean latencyEnabled = new AtomicBoolean(false);
 
     public RecommendationController(
             RecommendationService recommendationservice) {
@@ -34,6 +37,27 @@ public class RecommendationController {
             @PathVariable int userId) {
 
         log.info("Received recommendation request for userId={}", userId);
+        
+        if (latencyEnabled.get()) {
+            long start = System.currentTimeMillis();
+
+            log.warn("LATENCY TEST START: userId={}", userId);
+
+            try {
+                Thread.sleep(3000);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+                throw new IllegalStateException(
+                    "Recommendation request interrupted", e
+                );
+            }
+
+            log.warn(
+                "LATENCY TEST END: userId={}, elapsedMs={}",
+                userId,
+                System.currentTimeMillis() - start
+            );
+        }
 
         if (failureEnabled.get()) {
             log.error("Simulated failure enabled for userId={}", userId);
@@ -44,6 +68,8 @@ public class RecommendationController {
         return recommendationservice.getRecommendations(userId);
     }
 
+//  endpoints for controlled failure testing
+    
     @PostMapping("/admin/failure/enable")
     public String enableFailure() {
         failureEnabled.set(true);
@@ -56,5 +82,21 @@ public class RecommendationController {
         failureEnabled.set(false);
         log.info("Simulated Recommendation Service failure DISABLED");
         return "Simulated failure disabled";
+    }
+    
+//  endpoints for controlled delay testing
+    
+    @PostMapping("/admin/latency/enable")
+    public String enableLatency() {
+        latencyEnabled.set(true);
+        log.warn("Simulated Recommendation Service latency ENABLED");
+        return "Simulated latency enabled";
+    }
+
+    @PostMapping("/admin/latency/disable")
+    public String disableLatency() {
+        latencyEnabled.set(false);
+        log.info("Simulated Recommendation Service latency DISABLED");
+        return "Simulated latency disabled";
     }
 }

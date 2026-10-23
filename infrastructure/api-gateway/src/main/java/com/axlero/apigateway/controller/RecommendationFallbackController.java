@@ -18,6 +18,13 @@ public class RecommendationFallbackController {
     @GetMapping("/fallback/recommendations")
     public RecommendationResponse recommendationFallback(
             HttpServletRequest request) {
+    	
+    	log.warn(
+    		    "Fallback diagnostic: method={}, requestURI={}, dispatcherType={}",
+    		    request.getMethod(),
+    		    request.getRequestURI(),
+    		    request.getDispatcherType()
+    		);
 
         // Log incoming request details to help tracing
         log.info("Fallback endpoint invoked: method={}, requestURI={}, query={}",
