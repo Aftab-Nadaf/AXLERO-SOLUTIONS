@@ -361,10 +361,7 @@ function App() {
             <p className="eyebrow">RESILIENCE MONITORING</p>
             <h1>System Overview</h1>
           </div>
-          <div className="connection-status">
-            <span className="status-dot" />
-            Backend integration pending
-          </div>
+          
         </header>
 
         <section id="overview" className="welcome-section">
